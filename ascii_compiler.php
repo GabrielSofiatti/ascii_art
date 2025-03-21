@@ -41,9 +41,12 @@ function imageToAscii($imagePath, $outputFile, $width = 120, $height = 60) {
     $origWidth = imagesx($image);
     $origHeight = imagesy($image);
 
+    // Calcular nova altura proporcional ao width
     $aspectRatio = $origWidth / $origHeight;
-    $newHeight = (int) ($height / 2);
-    $newWidth = (int) ($newHeight * $aspectRatio);
+    $newHeight = (int) ($height);// * $aspectRatio);
+    $newWidth = (int) ($width);// * $aspectRatio);
+
+    // var_dump($newHeight ,$newWidth, $aspectRatio);
 
     $resized = imagecreatetruecolor($newWidth, $newHeight);
     imagecopyresampled($resized, $image, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
@@ -74,9 +77,9 @@ function asciiToImage($asciiFile, $outputImage) {
     $width = strlen($ascii[0]);
     $height = count($ascii);
 
-    $fontSize = 5; // Tamanho da fonte embutida do GD (1 a 5)
-    $charSpacing = 8; // Largura estimada para cada caractere
-    $lineSpacing = 12; // Altura estimada para cada linha
+    $fontSize = 1; // Tamanho da fonte embutida do GD (1 a 5)
+    $charSpacing = 6; // Largura estimada para cada caractere
+    $lineSpacing = 8; // Altura estimada para cada linha
 
     // Criar a imagem
     $newWidth = $width * $charSpacing;
@@ -128,7 +131,7 @@ $selectedImage = $images[(int) $choice];
 $imagePath = "$imagesDir/$selectedImage";
 $outputPath = "$compiledDir/" . pathinfo($selectedImage, PATHINFO_FILENAME) . ".txt";
 
-imageToAscii($imagePath, $outputPath, 1980, 1080);
+imageToAscii($imagePath, $outputPath, 550, 270);
 
 do {
     echo "Deseja exibir o conteúdo do ASCII Art no terminal? (s/n): ";
